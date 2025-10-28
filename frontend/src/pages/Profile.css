@@ -1,0 +1,252 @@
+.profile-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.profile-header {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.profile-avatar-section {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.profile-avatar-wrapper {
+  flex-shrink: 0;
+}
+
+.profile-avatar,
+.profile-avatar-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #667eea;
+}
+
+.profile-avatar-placeholder {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.profile-info h2 {
+  color: #2c3e50;
+  margin-bottom: 8px;
+  font-size: 1.8rem;
+}
+
+.profile-info p {
+  color: #7f8c8d;
+  margin-bottom: 12px;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.role-badge.admin {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  color: white;
+}
+
+.role-badge.user {
+  background: #ecf0f1;
+  color: #2c3e50;
+}
+
+.profile-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.tab {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #7f8c8d;
+  transition: all 0.3s ease;
+}
+
+.tab:hover {
+  background: #f8f9fa;
+}
+
+.tab.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.profile-content {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.tab-content h3 {
+  color: #2c3e50;
+  margin-bottom: 25px;
+  font-size: 1.4rem;
+}
+
+.tab-content .form-group {
+  margin-bottom: 20px;
+}
+
+.tab-content label {
+  display: block;
+  margin-bottom: 8px;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.tab-content input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+}
+
+.tab-content input:focus {
+  outline: none;
+  border-color: #667eea;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.tab-content small {
+  display: block;
+  margin-top: 5px;
+  color: #95a5a6;
+  font-size: 0.85rem;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #ecf0f1;
+  color: #2c3e50;
+}
+
+.btn-secondary:hover {
+  background: #bdc3c7;
+}
+
+/* Avatar Upload */
+.avatar-upload-section {
+  text-align: center;
+}
+
+.avatar-preview {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 25px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 3px dashed #667eea;
+}
+
+.avatar-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder-large {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  font-weight: 700;
+}
+
+.avatar-upload-controls {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.upload-hint {
+  color: #95a5a6;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .profile-avatar-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-tabs {
+    flex-direction: column;
+  }
+
+  .tab {
+    text-align: center;
+  }
+
+  .profile-content {
+    padding: 25px;
+  }
+}
+

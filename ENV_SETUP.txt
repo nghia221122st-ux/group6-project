@@ -1,0 +1,38 @@
+==============================================
+    HƯỚNG DẪN CẤU HÌNH ENVIRONMENT VARIABLES
+==============================================
+
+1. TẠO FILE .env TRONG THƯ MỤC backend/
+
+Nội dung file .env:
+
+PORT=3000
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/groupDB
+
+2. THAY ĐỔI CÁC GIÁ TRỊ
+
+<username>  → Thay bằng MongoDB username của bạn
+<password>  → Thay bằng MongoDB password của bạn
+cluster     → Thay bằng tên cluster của bạn (vd: cluster0)
+
+3. VÍ DỤ FILE .env HOÀN CHỈNH
+
+PORT=3000
+MONGODB_URI=mongodb+srv://groupuser:mypassword123@cluster0.abcdef.mongodb.net/groupDB?retryWrites=true&w=majority
+
+4. MONGODB LOCAL (NẾU KHÔNG DÙNG ATLAS)
+
+PORT=3000
+MONGODB_URI=mongodb://localhost:27017/groupDB
+
+==============================================
+    QUAN TRỌNG!
+==============================================
+
+- KHÔNG commit file .env lên GitHub
+- File .env đã được thêm vào .gitignore
+- Mỗi thành viên cần tạo .env riêng trên máy mình
+- Lưu connection string ở nơi an toàn
+
+==============================================  
+
