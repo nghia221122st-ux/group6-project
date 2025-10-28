@@ -1,5 +1,3 @@
-# .gitignore for backend projects (Node.js / general)
-
 # Node
 node_modules/
 dist/
@@ -51,3 +49,7 @@ env/
 *.tmp
 npm-debug.log*
 yarn-error.log*
+
+# Uploads
+uploads/*
+!uploads/.gitkeep
