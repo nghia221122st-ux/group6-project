@@ -2,6 +2,23 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
+// Password validation regex - must contain uppercase, number, and special character
+const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+// Validate password strength
+const validatePassword = (password) => {
+  if (!password || password.length < 6) {
+    return { valid: false, message: 'Password must be at least 6 characters' };
+  }
+  if (!PASSWORD_REGEX.test(password)) {
+    return { 
+      valid: false, 
+      message: 'Password must contain at least one uppercase letter, one number, and one special character (@$!%*?&)' 
+    };
+  }
+  return { valid: true };
+};
+
 // Generate JWT Token
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
