@@ -1,5 +1,22 @@
 const User = require('../models/User');
 
+// Password validation regex - must contain uppercase, number, and special character
+const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+// Validate password strength
+const validatePassword = (password) => {
+  if (!password || password.length < 6) {
+    return { valid: false, message: 'Password must be at least 6 characters' };
+  }
+  if (!PASSWORD_REGEX.test(password)) {
+    return { 
+      valid: false, 
+      message: 'Password must contain at least one uppercase letter, one number, and one special character (@$!%*?&)' 
+    };
+  }
+  return { valid: true };
+};
+
 // @desc    Get user profile
 // @route   GET /api/profile
 // @access  Private
@@ -59,6 +76,13 @@ exports.updateProfile = async (req, res) => {
       }
     });
   } catch (error) {
+    // Handle MongoDB duplicate key error
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      return res.status(400).json({ 
+        message: `${field.charAt(0).toUpperCase() + field.slice(1)} already in use` 
+      });
+    }
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -72,6 +96,12 @@ exports.updatePassword = async (req, res) => {
 
     if (!currentPassword || !newPassword) {
       return res.status(400).json({ message: 'Please provide current and new password' });
+    }
+
+    // Validate new password strength
+    const passwordValidation = validatePassword(newPassword);
+    if (!passwordValidation.valid) {
+      return res.status(400).json({ message: passwordValidation.message });
     }
 
     // Get user with password

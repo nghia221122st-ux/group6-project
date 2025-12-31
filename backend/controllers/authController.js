@@ -2,6 +2,23 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
+// Password validation regex - must contain uppercase, number, and special character
+const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+// Validate password strength
+const validatePassword = (password) => {
+  if (!password || password.length < 6) {
+    return { valid: false, message: 'Password must be at least 6 characters' };
+  }
+  if (!PASSWORD_REGEX.test(password)) {
+    return { 
+      valid: false, 
+      message: 'Password must contain at least one uppercase letter, one number, and one special character (@$!%*?&)' 
+    };
+  }
+  return { valid: true };
+};
+
 // Generate JWT Token
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -19,6 +36,12 @@ exports.signup = async (req, res) => {
     // Validation
     if (!name || !email || !password) {
       return res.status(400).json({ message: 'Please provide all required fields' });
+    }
+
+    // Validate password strength
+    const passwordValidation = validatePassword(password);
+    if (!passwordValidation.valid) {
+      return res.status(400).json({ message: passwordValidation.message });
     }
 
     // Check if user exists
@@ -49,6 +72,13 @@ exports.signup = async (req, res) => {
       }
     });
   } catch (error) {
+    // Handle MongoDB duplicate key error
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      return res.status(400).json({ 
+        message: `${field.charAt(0).toUpperCase() + field.slice(1)} already exists` 
+      });
+    }
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -179,6 +209,14 @@ exports.forgotPassword = async (req, res) => {
 // @access  Public
 exports.resetPassword = async (req, res) => {
   try {
+    const { password } = req.body;
+
+    // Validate password strength
+    const passwordValidation = validatePassword(password);
+    if (!passwordValidation.valid) {
+      return res.status(400).json({ message: passwordValidation.message });
+    }
+
     // Get hashed token
     const resetPasswordToken = crypto
       .createHash('sha256')
@@ -195,7 +233,7 @@ exports.resetPassword = async (req, res) => {
     }
 
     // Set new password
-    user.password = req.body.password;
+    user.password = password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     await user.save();
