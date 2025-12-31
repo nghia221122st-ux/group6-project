@@ -72,6 +72,13 @@ exports.signup = async (req, res) => {
       }
     });
   } catch (error) {
+    // Handle MongoDB duplicate key error
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyPattern)[0];
+      return res.status(400).json({ 
+        message: `${field.charAt(0).toUpperCase() + field.slice(1)} already exists` 
+      });
+    }
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
