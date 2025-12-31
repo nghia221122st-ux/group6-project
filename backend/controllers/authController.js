@@ -38,6 +38,12 @@ exports.signup = async (req, res) => {
       return res.status(400).json({ message: 'Please provide all required fields' });
     }
 
+    // Validate password strength
+    const passwordValidation = validatePassword(password);
+    if (!passwordValidation.valid) {
+      return res.status(400).json({ message: passwordValidation.message });
+    }
+
     // Check if user exists
     const userExists = await User.findOne({ email });
     if (userExists) {
